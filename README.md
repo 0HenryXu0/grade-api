@@ -1,24 +1,18 @@
-# Lab 5: Grade API program
+# Lab 5: Using APIs in Java
 
 ## Overview:
-In this lab, you and your team will learn how to work with web API calls.
-With this technical programming skill in hand, your team will be ready
-to begin working on your project!
+In this lab, you and your team will learn to work with web API calls.
+With this technical programming skill in hand, your team will be one step closer
+to implementing your project.
 
-> Students often find interacting with web APIs a bit tricky at first,
+> Interacting with web APIs can be a bit tricky at first,
 > but if your team works together then everyone should have a good understanding
 > of how to make web API calls by the end of this lab.
 
-## Requirements:
-
-To earn credit for this lab, your team must demonstrate fully working implementations of:
-* getting the average grade (Task 3)
-* getting the top grade (Task 4)
-
 ## Background: What Is a Web API and How Do I Use One?
 
-A call to a web API is simply a method call over the internet which returns a JSON 
-object as a response.
+A call to a web API is similar to a method call, but it is made over the internet.
+You send a request to a server and receive a response, often in JSON format.
 For example, there is a web API for cat facts called "meowfacts" which is 
 accessible at https://meowfacts.herokuapp.com.
 If you navigate to this URL in your web browser, you will be returned one random cat fact.
@@ -33,8 +27,10 @@ Below is one such cat fact received from the API:
 ```
 
 Just like in a Java method call, web API calls can have input parameters.
-For instance, in the meowfacts API, you are able to receive multiple cat 
-facts at once by providing a count parameter.
+These are often passed as **query parameters** in the URL.
+
+For instance, the meowfacts API can return multiple cat facts at once when
+you provide a count parameter.
 To do so, you append "?count=x" to the meowfacts API URL where `x` is the 
 number of cat facts you would like to request.
 
@@ -63,7 +59,8 @@ A minimal code example for accessing the meowfacts API discussed above using
 the `OkHttp` library is provided below and in class `GetExample` in the `example` package.
 
 * Try running `GetExample` at this point. If the project doesn't run,
-  please see the advice at the bottom of the README.
+  please see the advice at the bottom of the README. This class demonstrates making
+  two calls to the API. One call with no parameters, and a second call with a parameter.
 
 ```java
 import java.io.IOException;
@@ -93,10 +90,10 @@ public class GetExample {
 ```
 
 The output of the above will be a single cat fact in JSON format as we saw when
-making the call through our web browser. This JSON formatted response from the API could then be parsed and used by our program.
+making the call through our web browser. This JSON formatted response from the API
+could then be parsed and used by our program.
 
-
-The `GetExample` file also includes an overloaded version of the `run` method that
+[GetExample](src/main/java/example/GetExample.java) also includes an overloaded version of the `run` method that
 demonstrates passing in a value for the `count` parameter:
 
 ```java
@@ -107,7 +104,6 @@ public String run(String baseURL, String paramKey, String paramValue) throws IOE
 
         Request request = new Request.Builder()
                 .url(url)
-                .addHeader(paramKey, paramValue)
                 .build();
 
         try (Response response = client.newCall(request).execute()) {
@@ -131,8 +127,10 @@ Have one member of your team fork this repo and invite the others to collaborate
 You can do this in your repo on GitHub under `Settings -> Collaborators`.
 This will allow you to push branches to a common repo and then use pull requests to contribute
 your code and review. To prevent others from pushing directly to the main branch,
-we recommend you set branch protection rules on GitHub. Below are how the settings might look if you
-add branch protection rules:
+we recommend you set branch protection rules on GitHub.
+
+Below is an example of what the settings might look like after
+adding branch protection rules:
 
 ![image of branch protection rules for main
 with the requirement of two approvers to
@@ -144,36 +142,48 @@ the repository so that they have a local copy.
 ## Task 1: Your API Token (token)
 
 In this lab, we will be working with the Grade API. Unlike the meowfacts API, this API
-requires a user to provide a `token` in order to use it. This is common of many APIs, as
-it is necessary to limit access and monitor API usage limits.
+requires a user to provide a `token` in order to use it. This is common for many APIs, as
+it is necessary to limit access and monitor API usage.
 
-In order to use the Grade API, you will need to sign up a new username, and obtain your API token.
-To sign up a username, we are going to make a simple request to the Grade API.
+In order to use the Grade API, you will need to sign up with a username and obtain an API token.
+To do so, we are going to make a simple request to the Grade API.
 
-You can do this either through your web browser or using `OkHttp` in the `GetToken` class: 
+You can do this either through your web browser or using `OkHttp` in the [GetToken](src/main/java/example/GetToken.java) class: 
 
-* If using your web browser, enter `https://grade-apis.panchen.ca/signUp?username=USERNAME`
+* If using your web browser, enter `https://csc207-20269-vm.teach.cs.toronto.edu/signUp?username=USERNAME`
 with USERNAME replaced with the username you want to use.
 
 * If you want to use OkHttp, complete the TODO in `GetToken.main`.
 
-> Throughout this lab, you can refer to [the Grade API Postman Workspace](https://www.postman.com/cloudy-astronaut-813156/csc207-grade-apis-demo/overview)
+> Throughout this lab, you can refer to [the Grade API Postman Workspace](https://www.postman.com/cloudy-astronaut-813156/csc207-apis-2026)
 > for the documentation of all API requests related to the Grade API.
 > Specifically, to learn more about the SignUp API request,
-> refer to [this section of the workspace](https://www.postman.com/cloudy-astronaut-813156/csc207-grade-apis-demo/request/9huifpg/1-1-sign-up-when-a-username-is-available).
-
-**Note that the documentation above refers to a different URL, but you should use `https://grade-apis.panchen.ca/`
-throughout this lab.**
+> refer to [this section of the workspace](https://www.postman.com/cloudy-astronaut-813156/csc207-apis-2026/request/rq6uy9x/1-1-sign-up-when-a-username-is-available).
+> The documentation on Postman includes code snippets. You can set the language to `Java - OkHttp` to get
+> code snippets compatible with OkHttp. If you sign in with a Postman account, you can also run example API
+> calls through Postman. This isn't necessary to complete the lab activities though.
 
 After you have obtained the response, you need to save your token somewhere, as you will need it
 throughout the rest of the lab.
 
-* Create a new file called `token.txt` in the root directory of your project and copy / paste the value you found
-   for the `token` field in that file, as well as your username. This file is indicated in the `.gitignore` for your project, so
-   its name will appear highlighted in IntelliJ to indicate that git will ignore the file (it won't be version
-   controlled). **This can be useful to ensure that you don't accidentally share private information
-   (like personal API tokens) or configurations specific to your local environment when working on a
-   team project.**
+The response will look something like:
+
+```json
+{"environment_variables":"token=<YOUR_UNIQUE_TOKEN>",
+   "message":"User signed up successfully...",
+   "status_code":200,
+   "token":"<YOUR_UNIQUE_TOKEN>"}
+```
+
+* Create a file called `token.txt` beside `pom.xml` in the top-level folder of your project. 
+* Copy and paste the value you found for the `token` field in that file, as well as your username,
+  so that you don't forget them.
+
+> This file is indicated in the `.gitignore` for your project, so its name will
+> appear highlighted in IntelliJ to indicate that git will ignore the file (it won't be version 
+> controlled). **This can be useful to ensure that you don't accidentally share private information
+> (like personal API tokens) or configurations specific to your local environment when working on a
+> team project.**
 
 Now that you have your API token, the last step is to get your program to use it. To do so, we
 are going to set an `environment variable` in the run configuration.
@@ -200,15 +210,19 @@ are going to set an `environment variable` in the run configuration.
 You are now ready to use the program!
 Make sure everyone on your team has successfully completed the steps above before you move on.
 
+> An alternative to manually setting environment variables as was done above is to
+> set up a `.env` file. Your team may find using a `.env` file convenient when working on
+> your projects if you use an API requiring a token.
+
 ## Task 2: Forming a team
 
 As a team-building exercise, you will now work together using this application.
-Team members in this program are able to view the grades of other team members.
+In this program, team members can view one another's grades.
 
 1. Choose a team name. Make it something unique to your team, as other teams will also
    be picking team names and duplicate names aren't allowed in the Grade API.
 
-2. Have one member of your team form a team with the name your team chose (like you have done with TeamUp! during the RATs)
+2. Have one member of your team form a team with the name your team chose
    by clicking the `Form a team` button, entering the team name in the text field, and pressing `Submit`.
 
 3. Each other member of the team should then join the team using the `Join a team` menu. Make sure you see the popup
@@ -232,23 +246,35 @@ Now that you are all on the team, there are a couple coding tasks for your team 
 While this program has some useful core functionality which is provided by the Grade API,
 there are certain things that the Grade API can't currently do for us.
 
-1. Go to `My Team` menu, enter the course name as `207` and click on `Get average grade`. You will notice that the functionality 
-for `Get Average Grade` isn't implemented yet — it will just display `Average Grade: 0.0`. 
+1. Go to `My Team` menu, enter the course name as `207` and click on `Get average grade`.
+   You will notice that the functionality for `Get Average Grade` isn't implemented yet
+   — it will display `Average Grade: 0.0`. 
 2. As a team, your goal is to work together to implement this feature and confirm that it works.
-3. Follow the flow from the `getAverage` button defined in the UI code (`app/gui/Application.java`) to reach until the 
-`GetAverageGradeUseCase` in the usecase package. You can do this by setting a breakpoint and running the program in debug mode.
-4. You will need to finish implementing the logic of calculating the average grade (Task 3a in the code) in the `GetAverageGradeUseCase` class.
-The logic is partly implemented, but what is written depends on the `getMyTeam` method (Task 3b in the code), which needs to be implemented.
-Follow the hints provided in this method to complete its implementation. Note the API response will be in `JSON` format which you will need to parse.
+3. Trace the execution flow from the `Get Average Grade` button in
+   [Application.java](src/main/java/app/gui/Application.java) until you reach
+   [GetAverageGradeUseCase](src/main/java/usecase/GetAverageGradeUseCase.java).
+   You may use either debugger breakpoints or manual code tracing.
+4. Complete Task 3a in [GetAverageGradeUseCase](src/main/java/usecase/GetAverageGradeUseCase.java)
+   and Task 3b in [MongoGradeDataBase](src/main/java/api/MongoGradeDataBase.java).
+   The comments in the starter code provide hints.
 
-You can run the provided tests to check if your "Task 3a" `GetAverageGradeUseCase` logic is implemented correctly, _before_ you finish implementing the "Task 3b" `MongoGradeDataBase.getMyTeam` method in Task 3.
-These tests make use of a technique called mocking (or stubbing), where instead of calling the _actual_ API we use fake data instead.
-This is possible because of how the program is designed, with the `GradeDataBase` interface allowing us to replace any variable with
-reference type `GradeDataBase` with our own dummy implementation.
+You can run the provided tests to check if your "Task 3a" `GetAverageGradeUseCase` logic is
+implemented correctly, _before_ you finish implementing the "Task 3b" `MongoGradeDataBase.getMyTeam`
+method:
+
+`GetAverageGradeUseCaseMockitoTest` (mocked tests using Mockito)
+
+`GetAverageGradeUseCaseTest` (mocked tests using a stub database)
+
+> These tests make use of a technique called mocking (or stubbing), where instead of calling
+> the _actual_ API we use fake data instead. This is possible because of how the program is designed,
+> with the `GradeDataBase` interface allowing us to replace any variable with reference type `GradeDataBase`
+> with our own dummy implementation.
 
 ## Task 4: Coding the Get Top Grade feature
 
-In this task, you are required to build a feature that will allow the user to get the top grade on their team for a given course.
+In this task, you are required to build a feature that will allow the user to get the top grade on
+their team for a given course.
 
 1. Similar to `Get Average Grade`, you will need to implement the `Get Top Grade` feature.
 2. However, in this feature, the `Get Top Grade` usecase is already implemented in the `GetTopGradeUseCase` class.
@@ -257,16 +283,19 @@ You can draw inspiration from the `Get Average Grade` button.
 
 ## Task 5 Bonus
 
-If your team finishes the above tasks and has extra time, we encourage you to think of an
+If your team finishes early and has extra time, we encourage you to think of an
 additional use case that can be implemented using this Grade API.
 Implement this use case end-to-end, from the UI layer to the UseCase layer, and see if you can get it working.
 This will be good practice for when your team starts developing your own course project. 
+
+For example, new users are currently created by directly calling the Grade API.
+It might be nice if that functionality were incorporated into the application itself.
 
 ***
 
 ## Note about Authentication
 
-We are using a very simple authentication method, by passing our API `token` in the request headers.
+We are using a very simple authentication method: passing our API `token` in the request headers.
 When you use other real-world APIs in the future, you will encounter more sophisticated authentication techniques.
 
 ## Further Reading: Tools for Exploring APIs (Optional)
@@ -279,17 +308,25 @@ to be quite convenient when first exploring and learning about a new web API.
 The following explains the steps of how one could have used Hoppscotch to obtain a token for the Grade API.
 
 1. Go to https://hoppscotch.io. This is a tool that can be used to quickly interact with APIs.
-2. Beside the word GET, replace `https://echo.hoppscotch.io/` with `https://grade-apis.panchen.ca/signUp`.
+2. Beside the word GET,
+   replace `https://echo.hoppscotch.io/` with `https://csc207-20269-vm.teach.cs.toronto.edu/signUp`.
 
 Next, we need to specify the username which we want to use. To do this, we add a parameter.
 
 3. In the Parameters tab, choose `+ Add new` and set the parameter name to `username`.
-4. For its value, choose whatever username you want to use. Make note of the name you choose, as you'll use it during the lab. (Don't worry, you can repeat this process with a new username if you need to later!)
-5. Press the `Send` button to make the request. You may receive an error that the request didn't go through. Scroll down and select `proxy` as the middleware and press `Send` again. You should now see the result of the request.
-6. If the username had been used before, you will see a response indicating that. Choose a new username and send the request again.
-7. If the request is successfully sent, you will see a response that contains a `status_code` of value `200`. In this response, you will get two important fields: `token` and `environment_variables`, whose values need later on in the activity.
+4. For its value, choose whatever username you want to use. Make note of the name you choose,
+   as you'll use it during the lab. (Don't worry, you can repeat this process with a new username
+   if you need to later!)
+5. Press the `Send` button to make the request. You may receive an error that the request didn't
+   go through. Scroll down and select `proxy` as the middleware and press `Send` again. You should
+   now see the result of the request.
+6. If the username had been used before, you will see a response indicating that.
+   Choose a new username and send the request again.
+7. If the request is successfully sent, you will see a response that contains a `status_code` of
+   value `200`. In this response, you will get two important fields: `token` and
+   `environment_variables`.
 
-## Trouble Shooting
+## Troubleshooting
 
 You should be able to compile and run the project, but it is possible that the Maven
 project didn't automatically build. If you have errors that won't let you run the code in the
