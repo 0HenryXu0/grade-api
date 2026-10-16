@@ -188,9 +188,11 @@ The response will look something like:
 Now that you have your API token, the last step is to get your program to use it. To do so, we
 are going to set an `environment variable` in the run configuration.
 
-* Try running the main application (`src/main/java/app/gui/Application`). When you start the program,
-   you will see that it says `your token is null` (since we didn't set it yet).
-   Stop the program and go to `Run -> Edit Configurations...`.
+* Try running `Application` (in [Application](src/main/java/app/gui/Application)).
+
+When you start the program, you will see that it says `your token is null` (since we didn't set it yet).
+
+* Stop the program and go to `Run -> Edit Configurations...`.
 
 * Open the Run Configuration for `Application` and find the `Environment Variables:`
    field.
