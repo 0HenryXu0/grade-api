@@ -46,7 +46,7 @@ public class Application {
         // Initial setup for the program.
         // The config hides the details of which implementation of GradeDB
         // we are using in the program. If we were to use a different implementation
-        // of GradeDB, this config is what we would change.
+        // of GradeDataBase, this config is what we would change.
         final Config config = new Config();
 
         final GetGradeUseCase getGradeUseCase = config.getGradeUseCase();
@@ -197,7 +197,7 @@ public class Application {
                     final Grade grade = getGradeUseCase.getGrade(username, course);
                     JOptionPane.showMessageDialog(jFrame, String.format("Grade: %d", grade.getGrade()));
                 }
-                catch (JSONException ex) {
+                catch (RuntimeException ex) {
                     JOptionPane.showMessageDialog(jFrame, ex.getMessage());
                 }
             }
@@ -239,7 +239,7 @@ public class Application {
                     courseField.setText("");
                     gradeField.setText("");
                 }
-                catch (JSONException ex) {
+                catch (RuntimeException ex) {
                     JOptionPane.showMessageDialog(jFrame, ex.getMessage());
                 }
             }
@@ -275,7 +275,7 @@ public class Application {
                     JOptionPane.showMessageDialog(jFrame, "Team formed!");
                     nameField.setText("");
                 }
-                catch (JSONException ex) {
+                catch (RuntimeException ex) {
                     JOptionPane.showMessageDialog(jFrame, ex.getMessage());
                 }
             }
@@ -309,7 +309,7 @@ public class Application {
                     JOptionPane.showMessageDialog(jFrame, "Joined successfully");
                     nameField.setText("");
                 }
-                catch (JSONException ex) {
+                catch (RuntimeException ex) {
                     JOptionPane.showMessageDialog(jFrame, ex.getMessage());
                 }
             }
@@ -321,14 +321,14 @@ public class Application {
         return theCard;
     }
 
-    // TODO Task 4: modify this method so that it takes in a getTopGradeUseCase
+    // TODO Task 4: modify this method so that it also takes in a getTopGradeUseCase
     //              Note: this will require you to update the code that calls this method.
     private static JPanel createManageTeamCard(JFrame jFrame, LeaveTeamUseCase leaveTeamUseCase,
                                                GetAverageGradeUseCase getAverageGradeUseCase) {
         final JPanel theCard = new JPanel();
         theCard.setLayout(new GridLayout(ROWS, COLS));
         final JTextField courseField = new JTextField(20);
-        // make a separate line.
+
         final JButton getAverageButton = new JButton("Get Average Grade");
         // TODO Task 4: Add another button for "Get Top Grade" (check the getAverageButton for example)
 
@@ -350,7 +350,7 @@ public class Application {
                     JOptionPane.showMessageDialog(jFrame, "Average Grade: " + avg);
                     courseField.setText("");
                 }
-                catch (JSONException ex) {
+                catch (RuntimeException ex) {
                     JOptionPane.showMessageDialog(jFrame, ex.getMessage());
                 }
             }
@@ -370,7 +370,7 @@ public class Application {
                     leaveTeamUseCase.leaveTeam();
                     JOptionPane.showMessageDialog(jFrame, "Left team successfully.");
                 }
-                catch (JSONException ex) {
+                catch (RuntimeException ex) {
                     JOptionPane.showMessageDialog(jFrame, ex.getMessage());
                 }
             }
