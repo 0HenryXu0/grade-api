@@ -19,7 +19,7 @@ import okhttp3.Response;
  */
 public class MongoGradeDataBase implements GradeDataBase {
     // Defining some constants.
-    private static final String API_URL = "https://grade-apis.panchen.ca";
+    private static final String API_URL = "https://csc207-20269-vm.teach.cs.toronto.edu";
     private static final String CONTENT_TYPE = "Content-Type";
     private static final String APPLICATION_JSON = "application/json";
     private static final String STATUS_CODE = "status_code";
@@ -250,7 +250,7 @@ public class MongoGradeDataBase implements GradeDataBase {
     // TODO Task 3b: Implement this method
     //       Hint: Read the Grade API documentation for getMyTeam (link below) and refer to the above similar
     //             methods to help you write this code (copy-and-paste + edit as needed).
-    //             https://www.postman.com/cloudy-astronaut-813156/csc207-grade-apis-demo/folder/isr2ymn/get-my-team
+    //             https://www.postman.com/cloudy-astronaut-813156/csc207-apis-2026/folder/jljgjb8/get-my-team
     public Team getMyTeam() {
         final OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
@@ -265,7 +265,7 @@ public class MongoGradeDataBase implements GradeDataBase {
         final JSONObject responseBody;
 
         // TODO Task 3b: Implement the logic to get the team information
-        // HINT 1: Look at the formTeam method to get an idea on how to parse the response
+        // HINT 1: Look at the formTeam method to get an idea of how to parse the response
         // HINT 2: You may find it useful to just initially print the contents of the JSON
         //         then work on the details of how to parse it.
         return null;

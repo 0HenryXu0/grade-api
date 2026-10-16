@@ -27,7 +27,7 @@ public class GetAverageGradeUseCaseMockitoTest {
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.initMocks(this); // Use openMocks() instead of initMocks() if using Mockito 3.2+
+        MockitoAnnotations.openMocks(this);
         getAverageGradeUseCase = new GetAverageGradeUseCase(gradeDB);
     }
 

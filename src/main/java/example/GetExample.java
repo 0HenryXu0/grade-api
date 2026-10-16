@@ -45,7 +45,6 @@ public class GetExample {
 
         Request request = new Request.Builder()
                 .url(url)
-                .addHeader(paramKey, paramValue)
                 .build();
 
         try (Response response = client.newCall(request).execute()) {
@@ -63,7 +62,7 @@ public class GetExample {
         String response = example.run("https://meowfacts.herokuapp.com");
         System.out.println(response);
 
-        response = example.run("https://meowfacts.herokuapp.com", "count", "5");
+        response = example.run("https://meowfacts.herokuapp.com", "count", "2");
         System.out.println(response);
     }
 }
