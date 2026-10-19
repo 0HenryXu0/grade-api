@@ -193,6 +193,12 @@ public class Application {
             public void actionPerformed(ActionEvent e) {
                 final String username = usernameField.getText();
                 final String course = courseField.getText();
+
+                if (course.isEmpty()) {
+                    JOptionPane.showMessageDialog(jFrame, "Please enter a course.");
+                    return;
+                }
+
                 try {
                     final Grade grade = getGradeUseCase.getGrade(username, course);
                     JOptionPane.showMessageDialog(jFrame, String.format("Grade: %d", grade.getGrade()));
