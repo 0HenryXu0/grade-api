@@ -25,8 +25,15 @@ public final class GetAverageGradeUseCase {
         // TODO Task 3b: Go to the MongoGradeDataBase class and implement getMyTeam.
         final Team team = gradeDataBase.getMyTeam(); // Call the API to get the usernames of all team members
         // Call the API to get all the grades for the course for all your team members
-        // TODO Task 3a: Complete the logic of calculating the average course grade for
-        //              your team members. Hint: what methods are in the GradeDataBase interface?
+
+        for (String username : team.getMembers()) {
+            final Grade grade = gradeDataBase.getGrade(username, course);
+
+            if (grade != null) {
+                sum += grade.getGrade(); // Check the getter name in Grade.
+                count++;
+            }
+        }
 
         if (count == 0) {
             return 0;
